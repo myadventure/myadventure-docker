@@ -45,6 +45,9 @@ RUN pip install supervisor-stdout
 ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./nginx.conf /etc/nginx/nginx.conf
 
+ADD ./config/config.py /opt/app/config.py
+ADD ./config/facebook.config /opt/app/facebook.config
+
 # restart nginx to load the config
 RUN service nginx stop
 
