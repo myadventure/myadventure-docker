@@ -29,6 +29,9 @@ RUN service supervisor stop
 # clone api repo
 RUN git clone https://github.com/yakinaround/myadventure-api /opt/app
 
+# clone map repo
+RUN git clone https://github.com/yakinaround/myadventure-map /opt/html
+
 # create a virtual environment and install all dependencies from pypi
 RUN virtualenv /opt/venv
 ADD ./requirements.txt /opt/venv/requirements.txt
