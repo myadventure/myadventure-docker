@@ -17,6 +17,8 @@ RUN apt-get install -y python python-dev python-setuptools
 RUN apt-get install -y python-pip python-virtualenv
 RUN apt-get install -y nginx supervisor
 RUN apt-get install -y git
+RUN apt-get install -y libxml2-dev libxslt1-dev python-dev
+RUN apt-get install -y zlib1g-dev
 
 # stop supervisor service as we'll run it manually
 RUN service supervisor stop
@@ -29,7 +31,8 @@ RUN git clone https://github.com/yakinaround/myadventure-api /opt/app
 
 # create a virtual environment and install all dependencies from pypi
 RUN virtualenv /opt/venv
-# ADD ./requirements.txt /opt/venv/requirements.txt
+ADD ./requirements.txt /opt/venv/requirements.txt
+RUN /opt/venv/bin/pip install -r /opt/venv/requirements.txt
 RUN /opt/venv/bin/pip install -r /opt/app/requirements.txt
 
 # expose port(s)
