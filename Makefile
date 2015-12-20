@@ -6,4 +6,4 @@ build:
 	docker build -t="myadventure/myadventure" .
 
 run: build
-	docker run -d --name myadventure -p 192.168.1.200:80:80 myadventure/myadventure
+	docker run -d -p 192.168.1.200:80:80 myadventure/myadventure
