@@ -23,20 +23,13 @@ RUN apt-get install -y zlib1g-dev
 # stop supervisor service as we'll run it manually
 RUN service supervisor stop
 
-# build dependencies for postgres and image bindings
-# RUN apt-get build-dep -y python-imaging python-psycopg2
-
-# clone api repo
-RUN git clone https://github.com/yakinaround/myadventure-api /opt/api
-
-# clone front repo
-RUN git clone https://github.com/yakinaround/myadventure-front /opt/front
-
 # create a virtual environment and install all dependencies from pypi
 RUN virtualenv /opt/venv
 RUN /opt/venv/bin/pip install gunicorn
-RUN /opt/venv/bin/pip install -r /opt/api/requirements.txt
-RUN /opt/venv/bin/pip install -r /opt/front/requirements.txt
+ADD ./myadventure-api/requirements.txt /opt/venv/requirements-api.txt
+RUN /opt/venv/bin/pip install -r /opt/venv/requirements-api.txt
+ADD ./myadventure-front/requirements.txt /opt/venv/requirements-front.txt
+RUN /opt/venv/bin/pip install -r /opt/venv/requirements-front.txt
 
 # expose port(s)
 EXPOSE 80
@@ -47,10 +40,6 @@ RUN pip install supervisor-stdout
 # possible in the process.
 ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./nginx.conf /etc/nginx/nginx.conf
-
-ADD ./config/api-config.py /opt/api/config.py
-ADD ./config/facebook.config /opt/api/facebook.config
-ADD ./config/front-config.py /opt/front/config.py
 
 # restart nginx to load the config
 RUN service nginx stop

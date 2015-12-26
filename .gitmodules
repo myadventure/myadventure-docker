@@ -1,0 +1,6 @@
+[submodule "myadventure-api"]
+	path = myadventure-api
+	url = https://github.com/yakinaround/myadventure-api.git
+[submodule "myadventure-front"]
+	path = myadventure-front
+	url = https://github.com/yakinaround/myadventure-front.git
